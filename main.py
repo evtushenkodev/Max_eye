@@ -1,8 +1,8 @@
-from bs4 import BeautifulSoup as BS
 from json import dump
 
 from aiogram import types
 from aiogram.utils import executor
+from bs4 import BeautifulSoup as BS
 from requests import get
 
 from config import dp, bot
@@ -22,14 +22,14 @@ async def scanner(message: types.Message):
     }
     for j in social.values():
         try:
-            req = get(j, timeout=2)
+            req = get(j, timeout=5)
             code = req.status_code
         except:
             continue
         soup = BS(req.text, 'html.parser')
-        user_info = soup.find(string=u)
-        print(user_info)
-        if user_info:
+        user_info = soup.find('title')
+        user_info2 = soup.find('a', class_='_31VWB3vSkv19o3I7RVE710')
+        if u in str(user_info) or u in str(user_info2):
             user = "Found"
             if u not in save_json:
                 save_json[u] = []
