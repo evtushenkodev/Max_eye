@@ -10,6 +10,7 @@ from config import dp, bot
 
 @dp.message_handler(text_startswith="username")
 async def scanner(message: types.Message):
+    """Для старта поиска необходимо написать боту сообщение в формате: username xxx"""
     u = message.text.replace('username ', '')
     save_json = {}
     social = {
@@ -20,6 +21,7 @@ async def scanner(message: types.Message):
         "pikabu": f"https://pikabu.ru/@{u}",
         "reddit": f"https://reddit.com/user/{u}",
     }
+
     for j in social.values():
         try:
             req = get(j, timeout=5)
