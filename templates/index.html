@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Поиск пользователей</title>
+  </head>
+  <body>
+    <h1>Поиск пользователей</h1>
+    <form method="post" action="/search">
+      <label for="username">Имя пользователя:</label>
+      <input type="text" name="username" id="username">
+      <input type="submit" value="Поиск">
+    </form>
+    <div id="results"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $('form').submit(function(event) {
+        event.preventDefault();
+        var username = $('#username').val();
+        $.ajax({
+          type: 'POST',
+          url: '/search',
+          data: {username: username},
+          success: function(data) {
+            console.log(data);
+            var message = 'Результаты поиска для пользователя ' + username + ':<br>';
+            for (var key in data) {
+              message += key + ':<br>';
+              for (var i = 0; i < data[key].length; i++)
